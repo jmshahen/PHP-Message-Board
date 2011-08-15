@@ -15,7 +15,7 @@
 		public $create_board = 1;//I am the admin level that users have to be (or above) to create a board
 		public $delete_pending_after = 172800;//I am the time in seconds that pendingusers will be deleted, one day 86400
 		public $moderator = 99;//I am the admin level that users have to be (or above) to be a moderator/adminitrator
-		public $baseUrl = "http://www.productego.com/Work/PHP%20Message%20Board2";//i am the base url of the site, this is where the project is stored.
+		public $baseUrl = "";//i am the base url of the site, this is where the project is stored.
 		
 		//useful items
 		/**
