@@ -102,7 +102,7 @@
 			if(!empty($_SESSION['user']))
 			{
 				//find mysql entery to match username
-				$query = "SELECT * FROM users WHERE user='".mysql_escape_string($_SESSION['user'])."'";
+				$query = "SELECT * FROM users WHERE user='".mysql_real_escape_string($_SESSION['user'])."'";
 		
 				$result = mysql_query($query, $this->userDB);
 				if($result)
@@ -230,7 +230,7 @@
 		//logs a user in, $pass must be the md5 version
 		public function login($user, $pass)
 		{
-			$query = "SELECT * FROM users WHERE user='".mysql_escape_string($user)."'";
+			$query = "SELECT * FROM users WHERE user='".mysql_real_escape_string($user)."'";
 			$result = mysql_query($query);
 		
 			if($result)

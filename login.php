@@ -65,14 +65,14 @@ if (
 		}
 
 
-		$query = "SELECT * FROM users WHERE user='".mysql_escape_string($user)."'";
+		$query = "SELECT * FROM users WHERE user='".mysql_real_escape_string($user)."'";
 		$result = mysql_query($query);
 		if (mysql_num_rows($result) > 0 || empty($user)) {
 			//The username is already taken
 			$signupErrors[] = "1";// e=1, is sending an error code that means that the username is taken
 		}
 
-		$query = "SELECT * FROM pendingusers WHERE user='".mysql_escape_string($user)."'";
+		$query = "SELECT * FROM pendingusers WHERE user='".mysql_real_escape_string($user)."'";
 		$result = mysql_query($query);
 		if (mysql_num_rows($result) > 0) {
 			//The username is already taken, but special text display to notify that the user could still
@@ -80,13 +80,13 @@ if (
 			$signupErrors[] = "6";
 		}
 
-		$query = "SELECT * FROM users WHERE email='".mysql_escape_string($email)."'";
+		$query = "SELECT * FROM users WHERE email='".mysql_real_escape_string($email)."'";
 		$result = mysql_query($query);
 		if (mysql_num_rows($result) > 0) {
 			$signupErrors[] = "7";/* ?e=7, is sending an error code that means that the email is taken*/
 		}
 
-		$query = "SELECT * FROM pendingusers WHERE email='".mysql_escape_string($email)."'";
+		$query = "SELECT * FROM pendingusers WHERE email='".mysql_real_escape_string($email)."'";
 		$result = mysql_query($query);
 		if (mysql_num_rows($result) > 0) {
 			//The email is pending
@@ -104,10 +104,10 @@ if (
 			
 			//Inserts the user into the pending table
 			$query = "INSERT INTO pendingusers (user, pass, email, date) VALUES ('".
-				mysql_escape_string($user)."', '".
+				mysql_real_escape_string($user)."', '".
 				md5($pass.$connect->salt)."', '".
-				mysql_escape_string($email)."', '".
-				mysql_escape_string(date("Y-m-d"))."')";
+				mysql_real_escape_string($email)."', '".
+				mysql_real_escape_string(date("Y-m-d"))."')";
 			$result = mysql_query($query);
 			
 			//emails them with a link to register with the site
@@ -161,7 +161,7 @@ END;
 	{
 		$user = $_POST['user'];
 		$pass = $_POST['pass'];
-		$query = "SELECT * FROM users WHERE user='".mysql_escape_string($user)."'";
+		$query = "SELECT * FROM users WHERE user='".mysql_real_escape_string($user)."'";
 
 		$result = mysql_query($query, $connect->userDB);
 		if($result)
@@ -208,13 +208,13 @@ else if(isset($_GET['c']))
 			if($code == md5($row['user'].$row['pass'].$row['email'].$row['date'].$connect->salt))//correct user
 			{
 				$query = "INSERT INTO users (user, pass, email, date) VALUES ('".
-					mysql_escape_string($row['user'])."', '".
-					mysql_escape_string($row['pass'])."', '".
-					mysql_escape_string($row['email'])."', '".
-					mysql_escape_string(date("Y-m-d"))."')";
+					mysql_real_escape_string($row['user'])."', '".
+					mysql_real_escape_string($row['pass'])."', '".
+					mysql_real_escape_string($row['email'])."', '".
+					mysql_real_escape_string(date("Y-m-d"))."')";
 				$result = mysql_query($query);
 	
-				$query = "DELETE FROM pendingusers WHERE user='".mysql_escape_string($row['user'])."'";
+				$query = "DELETE FROM pendingusers WHERE user='".mysql_real_escape_string($row['user'])."'";
 				$result = mysql_query($query);
 	
 				$connect->login($row['user'], $row['pass']);

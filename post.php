@@ -74,17 +74,17 @@ msg TEXT NOT NULL
 					if($result)
 					{
 						$query = "INSERT INTO board_names (name, created_by, date_created, read_access, write_access) VALUES ('".
-							mysql_escape_string($_POST['file'])."', '".
-							mysql_escape_string($_SESSION['user'])."', '".
-							mysql_escape_string(date("Y/m/d h:m"))."', ".
-							mysql_escape_string($_POST['r_access']).", ".
-							mysql_escape_string($_POST['w_access']).")";
+							mysql_real_escape_string($_POST['file'])."', '".
+							mysql_real_escape_string($_SESSION['user'])."', '".
+							mysql_real_escape_string(date("Y/m/d h:m"))."', ".
+							mysql_real_escape_string($_POST['r_access']).", ".
+							mysql_real_escape_string($_POST['w_access']).")";
 						$result = mysql_query($query, $board_sql);	
 						
 						if($result)
 						{
 							//emails all those who need to be emailed
-							$query = "SELECT email FROM users WHERE mailOnBoardCreation=1 AND admin>=".mysql_escape_string($_POST['r_access']);
+							$query = "SELECT email FROM users WHERE mailOnBoardCreation=1 AND admin>=".mysql_real_escape_string($_POST['r_access']);
 							$result = mysql_query($query, $connect->userDB);
 
 							if($result)
